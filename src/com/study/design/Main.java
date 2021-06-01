@@ -1,13 +1,49 @@
 package com.study.design;
 
 import com.study.design.adapter.*;
+import com.study.design.aop.AopBrowser;
+import com.study.design.proxy.Browser;
+import com.study.design.proxy.BrowserProxy;
+import com.study.design.proxy.IBrowser;
 import com.study.design.singleton.AClazz;
 import com.study.design.singleton.BClazz;
 import com.study.design.singleton.SocketClient;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 public class Main {
 
     public static void main(String[] args) {
+
+        AtomicLong start = new AtomicLong();
+        AtomicLong end = new AtomicLong();
+
+        IBrowser aopBrowser = new AopBrowser("www.naver.com",
+                () ->{
+                    System.out.println("before");
+                    start.set(System.currentTimeMillis());
+                },
+                () -> {
+                    System.out.println("after");
+                    long now = System.currentTimeMillis();
+                    end.set(now - start.get());
+                });
+
+        aopBrowser.show();
+        System.out.println("loading time : " + end.get());
+
+        aopBrowser.show();
+        System.out.println("loading time : " + end.get());
+
+/*//        Browser browser = new Browser("www.naver.com");
+//        browser.show();
+        IBrowser browser = new BrowserProxy("www.naver.com");
+        browser.show();
+        browser.show();
+        browser.show();
+        browser.show();
+        browser.show();*/
+
        /* AClazz aClazz = new AClazz();
         BClazz bClazz = new BClazz();
 
@@ -26,7 +62,7 @@ public class Main {
         // 싱글톤 정리 : 어떠한 객체가 유일하게 1개만 존재해야 된다라면 싱글톤패턴을 사용하여 작성한다.
 */
 
-        HairDryer hairDryer = new HairDryer();
+/*        HairDryer hairDryer = new HairDryer();
         connect(hairDryer);
 
         Cleaner cleaner = new Cleaner();
@@ -41,7 +77,9 @@ public class Main {
         // connect(airConditioner); 에어컨이 220V 라 연결 안됨
 
         Electronic110V airConAdapter = new SocketAdapter(airConditioner);
-        connect(airConAdapter);
+        connect(airConAdapter);*/
+
+
 
     }
 

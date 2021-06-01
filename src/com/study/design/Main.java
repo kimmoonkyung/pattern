@@ -1,5 +1,6 @@
 package com.study.design;
 
+import com.study.design.adapter.*;
 import com.study.design.singleton.AClazz;
 import com.study.design.singleton.BClazz;
 import com.study.design.singleton.SocketClient;
@@ -7,7 +8,7 @@ import com.study.design.singleton.SocketClient;
 public class Main {
 
     public static void main(String[] args) {
-        AClazz aClazz = new AClazz();
+       /* AClazz aClazz = new AClazz();
         BClazz bClazz = new BClazz();
 
         SocketClient aClient = aClazz.getSocketClient();
@@ -22,8 +23,31 @@ public class Main {
 //        객체 비교 : public
 //        false
 
-        // 정리 : 어떠한 객체가 유일하게 1개만 존재해야 된다라면 싱글톤패턴을 사용하여 작성한다.
+        // 싱글톤 정리 : 어떠한 객체가 유일하게 1개만 존재해야 된다라면 싱글톤패턴을 사용하여 작성한다.
+*/
 
+        HairDryer hairDryer = new HairDryer();
+        connect(hairDryer);
+
+        Cleaner cleaner = new Cleaner();
+        // connect(cleaner); // 220V를 110V에 연결하여 문제가 생김
+
+        // 어댑터를 사왔다.
+        Electronic110V hairDryerAdapter = new SocketAdapter(cleaner);
+        // 어댑터를 통해 청소기를 연결
+        connect(hairDryerAdapter);
+
+        AirConditioner airConditioner = new AirConditioner();
+        // connect(airConditioner); 에어컨이 220V 라 연결 안됨
+
+        Electronic110V airConAdapter = new SocketAdapter(airConditioner);
+        connect(airConAdapter);
+
+    }
+
+    // 우리집 콘센트
+    public static void connect(Electronic110V electronic110V){
+        electronic110V.powerOn();
     }
 
 }

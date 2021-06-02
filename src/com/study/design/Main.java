@@ -2,6 +2,7 @@ package com.study.design;
 
 import com.study.design.adapter.*;
 import com.study.design.aop.AopBrowser;
+import com.study.design.decorator.*;
 import com.study.design.proxy.Browser;
 import com.study.design.proxy.BrowserProxy;
 import com.study.design.proxy.IBrowser;
@@ -15,7 +16,26 @@ public class Main {
 
     public static void main(String[] args) {
 
-        AtomicLong start = new AtomicLong();
+        // 데코레이터 패턴
+        /*ICar audi = new Audi(1000);
+        audi.showPrice();
+
+        // a3
+        ICar a3 = new A3(audi, "A3");
+        a3.showPrice();
+
+        // a4
+        ICar a4 = new A4(audi, "A4");
+        a4.showPrice();
+
+        // a5
+        ICar a5 = new A5(audi, "A5");
+        a5.showPrice();*/
+
+
+
+        // 프록시 패턴
+/*        AtomicLong start = new AtomicLong();
         AtomicLong end = new AtomicLong();
 
         IBrowser aopBrowser = new AopBrowser("www.naver.com",
@@ -33,8 +53,9 @@ public class Main {
         System.out.println("loading time : " + end.get());
 
         aopBrowser.show();
-        System.out.println("loading time : " + end.get());
+        System.out.println("loading time : " + end.get());*/
 
+        // 프록시 패턴
 /*//        Browser browser = new Browser("www.naver.com");
 //        browser.show();
         IBrowser browser = new BrowserProxy("www.naver.com");
@@ -44,6 +65,7 @@ public class Main {
         browser.show();
         browser.show();*/
 
+        // 싱글톤, 어댑터 패
        /* AClazz aClazz = new AClazz();
         BClazz bClazz = new BClazz();
 
@@ -64,7 +86,7 @@ public class Main {
 
 /*        HairDryer hairDryer = new HairDryer();
         connect(hairDryer);
-
+턴
         Cleaner cleaner = new Cleaner();
         // connect(cleaner); // 220V를 110V에 연결하여 문제가 생김
 

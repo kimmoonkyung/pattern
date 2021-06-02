@@ -15,6 +15,7 @@ import com.study.design.proxy.IBrowser;
 import com.study.design.singleton.AClazz;
 import com.study.design.singleton.BClazz;
 import com.study.design.singleton.SocketClient;
+import com.study.design.strategy.*;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -22,8 +23,30 @@ public class Main {
 
     public static void main(String[] args) {
 
+        Encoder encoder = new Encoder();
+
+        // base64
+        EncodingStrategy base64 = new Base64Strategy();
+
+        // normal
+        EncodingStrategy normal = new NormalStrategy();
+
+        String message = "9ood boy";
+
+        encoder.setEncodingStrategy(base64);
+        String base64Result = encoder.getMessage(message);
+        System.out.println(base64Result);
+
+        encoder.setEncodingStrategy(normal);
+        String normalResult = encoder.getMessage(message);
+        System.out.println(normalResult);
+
+        encoder.setEncodingStrategy(new AppendStrategy());
+        String appendResult = encoder.getMessage(message);
+        System.out.println(appendResult);
+
         // facade 패턴
-        Ftp ftpClient = new Ftp("maple-todo.com", 22, "/home/etc");
+       /* Ftp ftpClient = new Ftp("maple-todo.com", 22, "/home/etc");
         ftpClient.connect();
         ftpClient.moveDirectory();
 
@@ -44,7 +67,7 @@ public class Main {
         sftpClient.connect();
         sftpClient.write();
         sftpClient.read();
-        sftpClient.disConnect();
+        sftpClient.disConnect();*/
 
         // 옵저버 패턴
        /* Button button = new Button("버튼");

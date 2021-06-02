@@ -3,6 +3,12 @@ package com.study.design;
 import com.study.design.adapter.*;
 import com.study.design.aop.AopBrowser;
 import com.study.design.decorator.*;
+import com.study.design.facade.Ftp;
+import com.study.design.facade.Reader;
+import com.study.design.facade.SftpClient;
+import com.study.design.facade.Writer;
+import com.study.design.observer.Button;
+import com.study.design.observer.IButtonListener;
 import com.study.design.proxy.Browser;
 import com.study.design.proxy.BrowserProxy;
 import com.study.design.proxy.IBrowser;
@@ -15,6 +21,45 @@ import java.util.concurrent.atomic.AtomicLong;
 public class Main {
 
     public static void main(String[] args) {
+
+        // facade 패턴
+        Ftp ftpClient = new Ftp("maple-todo.com", 22, "/home/etc");
+        ftpClient.connect();
+        ftpClient.moveDirectory();
+
+        Writer writer = new Writer("text.tmp");
+        writer.fileConnect();
+        writer.write();
+
+        Reader reader = new Reader("text.tmp");
+        reader.fileConnect();
+        reader.fileRead();
+
+        reader.fileDisconnect();
+        writer.fileDisConnect();
+        ftpClient.disConnect();
+
+        // ->
+        SftpClient sftpClient = new SftpClient("maple-todo.com", 22, "/home/etc", "text.tmp");
+        sftpClient.connect();
+        sftpClient.write();
+        sftpClient.read();
+        sftpClient.disConnect();
+
+        // 옵저버 패턴
+       /* Button button = new Button("버튼");
+        button.addListener(new IButtonListener() {
+            @Override
+            public void clickEvent(String event) {
+                System.out.println(event);
+            }
+        });
+
+        button.click("메시지 전달 : click 1");
+        button.click("메시지 전달 : click 2");
+        button.click("메시지 전달 : click 3");
+        button.click("메시지 전달 : click 4");
+        button.click("메시지 전달 : click 5");*/
 
         // 데코레이터 패턴
         /*ICar audi = new Audi(1000);
